@@ -2,14 +2,16 @@
 
 source functions.sh
 
-sd_card="./"
+sd_card="./sdcard"
 tmp_dir="/tmp/switchmeup"
 updated_sd="$tmp_dir/sd_files/"
 work_dir="$tmp_dir/_work"
 addons=$(read_addons "addons.yml")
+backup_folder="backup_$(date +'%d%m%y%H%M')"
 
 mkdir -p $sd_card
 mkdir -p $tmp_dir
+mkdir -p $backup_folder
 
 cd $tmp_dir
 
@@ -33,10 +35,10 @@ while IFS= read -r url; do
     fi
 done <<< "$addons"
 
-# TODO
-# copy all the files on sd card moving the older files into a bakcup folder with the date
-
 # Cleanup
 # un-needed languages (for me)
 rm -rf $updated_sd/switch/DBI_ptbr.nro $updated_sd/switch/DBI_ru.nro
+
+# TODO
+rsync -av --backup --backup-dir="$backup_folder" "$updated_sd/" "$sd_card/"
 
