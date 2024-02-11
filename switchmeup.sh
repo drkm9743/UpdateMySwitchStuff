@@ -34,4 +34,11 @@ done <<< "$addons"
 
 ls $tmp_dir
 
+# TODO
+# Install Lockpick: https://vps.suchmeme.nl/git/mudkip/Lockpick_RCM/releases/download/v1.9.11/Lockpick_RCM.bin
+# Install sigpatches: https://sigmapatches.su even lockipck available here
+# Install Hekate: https://github.com/CTCaer/hekate
+# copy all the files on sd card moving the older files into a bakcup folder with the date
+
+echo "TODO: Please check if nxmtp is installed" # TODO
 
