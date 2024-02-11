@@ -40,5 +40,3 @@ ls $tmp_dir
 # Install Hekate: https://github.com/CTCaer/hekate
 # copy all the files on sd card moving the older files into a bakcup folder with the date
 
-echo "TODO: Please check if nxmtp is installed" # TODO
-

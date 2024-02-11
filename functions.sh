@@ -8,20 +8,31 @@ get_latest() {
   cd "$work_dir"
 
   API_URL="https://api.github.com/repos/$OWNER/$REPO/releases/latest"
+  PRE_RELEASE_URL="https://api.github.com/repos/$OWNER/$REPO/releases"
 
   echo "Fetching latest release from $OWNER/$REPO..."
-  release_data=$(curl -L \
+  release_data=$(curl -sL \
     -H "Accept: application/vnd.github+json" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
     "$API_URL")
 
-  # If latest release not found, get the most recent entry instead
-  if [[ ! "$release_data" || "$release_data" == "Not Found" ]]; then
-    echo "Latest release not found, getting the most recent entry..."
-    release_data=$(curl -L \
+  # Check if a release was found
+  if echo "$release_data" | jq -e .tag_name > /dev/null; then
+    echo "Latest release found."
+    echo "$release_data" | jq .
+  else
+    echo "No latest release found, checking for pre-releases..."
+    release_data=$(curl -sL \
       -H "Accept: application/vnd.github+json" \
-      -H "X-GitHub-Api-Version: 2022-11-28" \
-      "https://api.github.com/repos/$OWNER/$REPO/releases")
+      "$PRE_RELEASE_URL" | jq '[.[] | select(.prerelease == true)] | first')
+    
+    # Check if a pre-release was found
+    if echo "$release_data" | jq -e .tag_name > /dev/null; then
+      echo "Latest pre-release found."
+      echo "$release_data" | jq .
+    else
+      echo "No pre-releases found."
+    fi
   fi
 
   if [[ ! "$release_data" || "$release_data" == "Not Found" ]]; then
@@ -67,8 +78,6 @@ get_latest() {
 
   cd -
 }
-
-
 
 install_atmosphere() {
 
