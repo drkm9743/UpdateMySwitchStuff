@@ -1,6 +1,10 @@
 #!/bin/bash
 
 get_latest() {
+
+  # This bash function fetches the latest release or pre-release assets from a GitHub repository and downloads them.
+  # It handles various file types by extracting ".zip" files with `unzip`, ".tar.gz" files with `tar`, and retains other file types as is.
+
   OWNER="$1"
   REPO="$2"
 
@@ -79,16 +83,62 @@ get_latest() {
   cd -
 }
 
-install_atmosphere() {
+install_basic_pack() {
 
     local install_path="$updated_sd"
 
-    echo "Installing atmosphere in $(realpath $install_path)" # DEBUG
-
+    echo "Installing Atmosphere in $(realpath $install_path)"
+    get_latest "Atmosphere-NX" "Atmosphere"
     mkdir -p "$install_path/payloads"
     rsync -PrlD --mkpath --remove-source-files "$work_dir/fusee.bin" "$install_path/payloads"
-    ls -lah $install_path
     rsync -PrlD --mkpath --remove-source-files "$work_dir/atmosphere"*/ "$install_path"
+    rm -rf $work_dir
+
+    echo "Installing hekate + Nyx in $(realpath $install_path)"
+    get_latest "CTCaer" "hekate"
+    rsync -PrlD --mkpath --remove-source-files "$work_dir/hekate"*"/hekate"*".bin" "$install_path/payloads"
+    rsync -PrlD --mkpath --remove-source-files "$work_dir/hekate"*/ "$install_path"
+    rm -rf $work_dir
+
+}
+
+install_sigpatches() {
+
+  local install_path="$updated_sd"
+  echo "Installing SigPatches in $(realpath $install_path)"
+
+  mkdir -p $work_dir
+  cd $work_dir
+
+  # Fetch the webpage content and extract the sigpatches URL
+  sigpatches_url=$(curl -s "https://sigmapatches.su/" | grep -oP 'href="/sigpatches\.zip\?\K[^"]+(?=")')
+
+  # Check if the URL is found
+  if [ -n "$sigpatches_url" ]; then
+      echo "Found sigpatches URL: https://sigmapatches.su/sigpatches.zip?$sigpatches_url"
+      
+      # Download the sigpatches file
+      wget "https://sigmapatches.su/sigpatches.zip?$sigpatches_url" -O sigpatches.zip
+
+      echo "Extracting SigPatches..."
+      dirname=sigpatches
+      mkdir -p "$dirname"
+      unzip -d "$dirname" sigpatches.zip
+      echo "Extraction complete. Deleting the archive..."
+      rm sigpatches.zip
+  else
+      echo "Error: Sigpatches URL not found."
+      read -p "Are you sure you want to continue? [N/y] " choice
+      case "$choice" in 
+        y|Y ) echo "Continuing...";;
+        * ) echo "Exiting..."; exit 0;;
+      esac
+  fi
+
+  rsync -PrlD --mkpath --remove-source-files "$work_dir/sigpatches/"*/ "$install_path"
+
+  cd -
+  rm -rf $work_dir
 
 }
 

@@ -13,10 +13,11 @@ mkdir -p $tmp_dir
 
 cd $tmp_dir
 
-rm -rf * # DEBUG
+echo "Cleaning up temp dir"
+rm -rf *
 
-get_latest "Atmosphere-NX" "Atmosphere"
-install_atmosphere
+install_basic_pack
+install_sigpatches
 rm -rf $work_dir
 
 while IFS= read -r url; do
@@ -36,7 +37,9 @@ ls $tmp_dir
 
 # TODO
 # Install Lockpick: https://vps.suchmeme.nl/git/mudkip/Lockpick_RCM/releases/download/v1.9.11/Lockpick_RCM.bin
-# Install sigpatches: https://sigmapatches.su even lockipck available here
-# Install Hekate: https://github.com/CTCaer/hekate
 # copy all the files on sd card moving the older files into a bakcup folder with the date
+
+# Cleanup
+# un-needed languages (for me)
+rm -rf $updated_sd/switch/DBI_ptbr.nro $updated_sd/switch/DBI_ru.nro
 
