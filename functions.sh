@@ -135,7 +135,48 @@ install_sigpatches() {
       esac
   fi
 
-  rsync -PrlD --mkpath --remove-source-files "$work_dir/sigpatches/"*/ "$install_path"
+  rsync -PrlD --mkpath --remove-source-files "$work_dir/sigpatches/"* "$install_path"
+
+  cd -
+  rm -rf $work_dir
+
+}
+
+install_lockpick() {
+
+  local install_path="$updated_sd"
+  echo "Installing Lockpick in $(realpath $install_path)"
+
+  mkdir -p $work_dir
+  cd $work_dir
+  
+  # Define the URL of the webpage
+  lockpick_url=$(curl -s "https://sigmapatches.su/" | grep -oP '(?<=href=")/Lockpick_RCM_v[0-9.]+\.zip\?[0-9.]+(?=")')
+
+  # Check if the URL is found
+  if [ -n "$lockpick_url" ]; then
+      echo "Found Lockpick URL: https://sigmapatches.su${lockpick_url}.zip"
+
+      # Download the Lockpick file
+      wget "https://sigmapatches.su${lockpick_url}.zip" -O lockpick.zip
+      echo "Lockpick downloaded successfully."
+
+      echo "Extracting Lockpick..."
+      dirname=lockpick
+      mkdir -p "$dirname"
+      unzip -d "$dirname" lockpick.zip
+      echo "Extraction complete. Deleting the archive..."
+      rm lockpick.zip
+  else
+      echo "Error: Lockpick URL not found."
+      read -p "Are you sure you want to continue? [N/y] " choice
+      case "$choice" in 
+        y|Y ) echo "Continuing...";;
+        * ) echo "Exiting..."; exit 0;;
+      esac
+  fi
+
+  rsync -PrlD --mkpath --remove-source-files "$work_dir/lockpick/"*.bin "$install_path/payloads"
 
   cd -
   rm -rf $work_dir

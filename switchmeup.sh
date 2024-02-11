@@ -2,9 +2,9 @@
 
 source functions.sh
 
-updated_sd="sd_files/"
 sd_card="./"
 tmp_dir="/tmp/switchmeup"
+updated_sd="$tmp_dir/sd_files/"
 work_dir="$tmp_dir/_work"
 addons=$(read_addons "addons.yml")
 
@@ -18,7 +18,7 @@ rm -rf *
 
 install_basic_pack
 install_sigpatches
-rm -rf $work_dir
+install_lockpick
 
 while IFS= read -r url; do
     # Call the install_addon function with the current URL
@@ -33,10 +33,7 @@ while IFS= read -r url; do
     fi
 done <<< "$addons"
 
-ls $tmp_dir
-
 # TODO
-# Install Lockpick: https://vps.suchmeme.nl/git/mudkip/Lockpick_RCM/releases/download/v1.9.11/Lockpick_RCM.bin
 # copy all the files on sd card moving the older files into a bakcup folder with the date
 
 # Cleanup
