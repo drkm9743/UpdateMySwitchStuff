@@ -39,6 +39,5 @@ done <<< "$addons"
 # un-needed languages (for me)
 rm -rf $updated_sd/switch/DBI_ptbr.nro $updated_sd/switch/DBI_ru.nro
 
-# TODO
 rsync -av --backup --backup-dir="$backup_folder" "$updated_sd/" "$sd_card/"
 
