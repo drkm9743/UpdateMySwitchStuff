@@ -15,6 +15,15 @@ get_latest() {
     -H "X-GitHub-Api-Version: 2022-11-28" \
     "$API_URL")
 
+  # If latest release not found, get the most recent entry instead
+  if [[ ! "$release_data" || "$release_data" == "Not Found" ]]; then
+    echo "Latest release not found, getting the most recent entry..."
+    release_data=$(curl -L \
+      -H "Accept: application/vnd.github+json" \
+      -H "X-GitHub-Api-Version: 2022-11-28" \
+      "https://api.github.com/repos/$OWNER/$REPO/releases")
+  fi
+
   if [[ ! "$release_data" || "$release_data" == "Not Found" ]]; then
     echo "Error fetching release data. Please check the repository and user name."
     exit 1
@@ -60,6 +69,7 @@ get_latest() {
 }
 
 
+
 install_atmosphere() {
 
     local install_path="$updated_sd"
@@ -98,8 +108,11 @@ install_addon() {
   else
       # If no .nro files are found, proceed to search for the "atmosphere" folder
       atmosphere_folder=$(find "$work_dir" -type d -name "atmosphere" -print -quit)
-      if [[ -n $atmosphere_folder ]]; then
-          echo "Atmosphere folder found at: $atmosphere_folder"
+      if [[ -z $atmosphere_folder ]]; then
+          atmosphere_folder=$(find "$work_dir" -type d -name "switch" -print -quit)
+      fi
+      if [[ -n $atmosphere_folder || -n $switch_folder ]]; then
+          echo "Atmosphere or switch folder found at: $atmosphere_folder"
           base_folder="$(realpath "$atmosphere_folder/..")"
           echo "Moving the contents of $base_folder into $updated_sd"
           rsync -PrlD --mkpath --remove-source-files "$base_folder/"* "$updated_sd"
