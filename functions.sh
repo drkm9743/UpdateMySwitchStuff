@@ -4,8 +4,8 @@ get_latest() {
   OWNER="$1"
   REPO="$2"
 
-  mkdir -p _work
-  cd _work
+  mkdir -p "$work_dir"
+  cd "$work_dir"
 
   API_URL="https://api.github.com/repos/$OWNER/$REPO/releases/latest"
 
@@ -62,7 +62,7 @@ get_latest() {
 
 install_atmosphere() {
 
-    local install_path="$1"
+    local install_path="$updated_sd"
 
     echo "Installing atmosphere in $(realpath $install_path)" # DEBUG
 
@@ -71,5 +71,43 @@ install_atmosphere() {
     ls -lah $install_path
     rsync -PrlD --mkpath --remove-source-files "$work_dir/atmosphere"*/ "$install_path"
 
+}
 
+read_addons() {
+    # Using grep to find lines starting with "  - url:" and then using awk to extract the URL part
+    urls=$(grep '^\s*-\s*url:' "$1" | awk '{print $3}')
+    echo "$urls"
+}
+
+install_addon() {
+
+  echo "Installing $1/$2"
+
+  get_latest "$1" "$2"
+
+  nro_folder="$updated_sd/switch"
+  mkdir -p $nro_folder
+
+  # Check for any .nro files in the specified working directory
+  nro_files=$(find "$work_dir" -type f -name "*.nro")
+
+  if [[ -n $nro_files ]]; then
+      echo ".nro files found, moving them to $nro_folder"
+      # Move all .nro files to the specified FOLDER
+      find "$work_dir" -type f -name "*.nro" -exec mv {} "$nro_folder" \;
+  else
+      # If no .nro files are found, proceed to search for the "atmosphere" folder
+      atmosphere_folder=$(find "$work_dir" -type d -name "atmosphere" -print -quit)
+      if [[ -n $atmosphere_folder ]]; then
+          echo "Atmosphere folder found at: $atmosphere_folder"
+          base_folder="$(realpath "$atmosphere_folder/..")"
+          echo "Moving the contents of $base_folder into $updated_sd"
+          rsync -PrlD --mkpath --remove-source-files "$base_folder/"* "$updated_sd"
+      else
+          echo "No atmosphere folder found in the specified directory or any subdirectories."
+          echo "FAILURE: no nro files or atmosphere folder found, $1/$2 cannot be installed."
+      fi
+  fi
+
+  rm -rf $work_dir
 }
