@@ -32,7 +32,7 @@ jobs:
         run: "/bin/bash switchmeup.sh ${GITHUB_WORKSPACE}/sdcard"
 
       - name: Compressing files
-        run: "/bin/bash tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE}/sdcard"
+        run: "tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE}/sdcard"
 
       - name: Publish SwitchMeUp pack in a new release
         uses: ncipollo/release-action@v1
