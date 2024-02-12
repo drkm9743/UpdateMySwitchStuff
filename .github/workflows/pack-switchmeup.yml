@@ -29,16 +29,17 @@ jobs:
         run: "/bin/bash switchmeup.sh ${GITHUB_WORKSPACE}/sdcard"
 
       - name: Compressing files
-        run: "tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE}/sdcard ."
+        run: "tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE} sdcard"
 
       - name: Publish SwitchMeUp pack in a new release
         uses: ncipollo/release-action@v1
         with:
-          name: "SwitchMeUp $date +'%d-%m-%y')"
+          name: "SwitchMeUp $(date +'%d-%m-%y')"
           artifacts: "SwitchMeUp.tar.gz"
           allowUpdates: true
           makeLatest: true
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+          tag: "SwitchMeUp $(date +'%d-%m-%y')"
         continue-on-error: true
 
       # In case it cannot publish the release at least it's providing the flatpak file for creating a manual release
