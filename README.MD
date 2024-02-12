@@ -1,7 +1,7 @@
 
 
 <img src="logo.jpeg" height="300px" />
-<br><br><br>
+<br>
 
 # SwitchMeUp
 This is a bash script that update Atmoshpere, hekate, patches and the software that I use with the latest available.
