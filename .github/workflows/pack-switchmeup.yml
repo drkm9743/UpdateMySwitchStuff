@@ -29,7 +29,7 @@ jobs:
       #   run: "automation_tools/appdata_management.sh"
         
       - name: "Running SwitchMeUp"
-        run: "ls -lah && ./switchmeup ${GITHUB_WORKSPACE}/sdcard"
+        run: "ls -lah" # && ./switchmeup ${GITHUB_WORKSPACE}/sdcard"
 
       - name: Compressing files
         run: "/bin/bash tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE} sdcard"
