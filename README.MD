@@ -36,5 +36,8 @@ Can you add `THAT SOFTWARE` ?
 Can I propose a new software or feature?
 > Yes, you can create a pull request (PR) with your suggestions. We can discuss further implementations, but please note that I will not implement it for you.
 
+## Contribution
+If you would like to contribute by adding something, but you're not sure if it would be merged, it can be discussed in the 'Discussions' here on GitHub.
+
 ## TODO
 I plan to create a pipeline that releases the updated files as a package, available for extraction onto your SD card, via GitHub releases.
