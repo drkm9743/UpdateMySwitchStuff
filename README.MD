@@ -12,7 +12,7 @@ The basic package contains Atmosphere, hekate and wht for my usage is mandatory,
 > ⚠️ WARNING: this is a prersonal script that I'm sharing, I will not be responsible for any issue that can cause.
 
 ### There are already some tools that do this even more prettier, why this?
-Because they usually use some AIO packages that I don't like, moreover thare was no one that can deliver my own selection, something was always missing. 
+Because they usually use some AIO packages that I don't like, moreover I couldn't find one that could deliver my own selection, something was always missing.
 
 ## Dependencies
 
