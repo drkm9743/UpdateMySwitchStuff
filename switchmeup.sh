@@ -3,14 +3,13 @@
 
 source functions.sh
 
-sd_card="$(realpath $1)"
+sd_card="$(realpath "$1")"
 tmp_dir="/tmp/switchmeup"
 updated_sd="$tmp_dir/sd_files/"
 work_dir="$tmp_dir/_work"
 addons=$(read_addons "addons.yml")
 backup_folder="backup_$(date +'%d%m%y%H%M')"
 
-mkdir -p $sd_card
 mkdir -p $tmp_dir
 
 cd $tmp_dir
@@ -39,6 +38,8 @@ done <<< "$addons"
 # un-needed languages (for me)
 rm -rf $updated_sd/switch/DBI_ptbr.nro $updated_sd/switch/DBI_ru.nro
 
-echo "Moving file into the actual SD Card with backup"
+echo -e "Moving files into the actual SD Card with backup\nSD Card: $sd_card\nBackup folder:$backup_folder"
 mkdir -p $backup_folder
+mkdir -p $sd_card
 rsync -av --backup --backup-dir="$backup_folder" "$updated_sd/" "$sd_card/"
+echo "Everything done, enjoy!"
