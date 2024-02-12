@@ -28,8 +28,11 @@ jobs:
       - name: "Running SwitchMeUp"
         run: "/bin/bash switchmeup.sh ${GITHUB_WORKSPACE}/sdcard"
 
-      - name: Compressing files
+      - name: "Compressing files"
         run: "tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE} sdcard"
+
+      - name: "Generating date for tag"
+        run: echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M:%S')"
 
       - name: Publish SwitchMeUp pack in a new release
         uses: ncipollo/release-action@v1
@@ -39,7 +42,7 @@ jobs:
           allowUpdates: true
           makeLatest: true
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
-          tag: "$(date +'%d-%m-%y')"
+          tag: ${{ env.NOW }}
         continue-on-error: true
 
       # In case it cannot publish the release at least it's providing the flatpak file for creating a manual release
