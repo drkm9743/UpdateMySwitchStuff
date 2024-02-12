@@ -29,7 +29,7 @@ Simply execute the script and provide the location of the SD card where the requ
 ./switchmeup "/sd/card/location"
 ```
 
-## What can I fid in the Release section?
+## What can I find in the Release section?
 There you can find an already prepared package, basically the pipeline runs the script in the runner and provide you the ready package, if you wish to just download it or you don't want to execute the script from your computer.
 This of course is up to you to install and make a backup.
 
