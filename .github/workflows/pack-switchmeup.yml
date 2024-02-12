@@ -13,7 +13,7 @@ on:
 
 jobs:
 
-  Packing_SwitchMeUp:
+  Running_SwitchMeUp:
     runs-on: ubuntu-latest
     steps:
 
@@ -23,7 +23,7 @@ jobs:
           submodules: 'true'
 
       - name: "Install dependencies"
-        run: "sudo apt update && sudo apt install jq rsync curl wget"
+        run: "sudo apt update && sudo apt install jq rsync curl wget tar"
 
       # - name: "Updating release notes in appdata"
       #   run: "automation_tools/appdata_management.sh"
