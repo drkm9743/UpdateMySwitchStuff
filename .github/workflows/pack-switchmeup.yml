@@ -37,7 +37,7 @@ jobs:
       - name: Publish SwitchMeUp pack in a new release
         uses: ncipollo/release-action@v1
         with:
-          name: "SwitchMeUp $(date +'%d-%m-%y')"
+          name: "SwitchMeUp ${{ env.NOW }}"
           artifacts: "SwitchMeUp.tar.gz"
           allowUpdates: true
           makeLatest: true
