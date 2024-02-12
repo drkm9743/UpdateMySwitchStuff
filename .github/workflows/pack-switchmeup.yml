@@ -1,0 +1,53 @@
+name: "Releasing pack"
+
+on:
+  push:
+    branches:
+     - main
+  pull_request: 
+    branches:
+     - main
+
+  workflow_dispatch:
+
+
+jobs:
+
+  Building_RetroDECK:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone SwitchMeUp repo
+        uses: actions/checkout@v3
+        with:
+          submodules: 'true'
+
+      - name: "Install dependencies"
+        run: "/bin/bash apt install jq rsync curl wget realpath"
+
+      # - name: "Updating release notes in appdata"
+      #   run: "automation_tools/appdata_management.sh"
+        
+      - name: "Running SwitchMeUp"
+        run: "/bin/bash ./switchmeup ${GITHUB_WORKSPACE}/sdcard"
+
+      - name: Compressing files
+        run: "/bin/bash tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE} sdcard"
+
+      - name: Publish SwitchMeUp pack in a new release
+        uses: ncipollo/release-action@v1
+        with:
+          name: "SwitchMeUp $date +'%d-%m-%y')"
+          artifacts: "SwitchMeUp.tar.gz"
+          allowUpdates: true
+          makeLatest: true
+          token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
+        continue-on-error: true
+
+      # In case it cannot publish the release at least it's providing the flatpak file for creating a manual release
+      - name: Upload SwitchMeUp.tar.gz
+        uses: actions/upload-artifact@v3
+        with:
+          name: SwitchMeUp
+          path: SwitchMeUp.tar.gz
+        continue-on-error: true
