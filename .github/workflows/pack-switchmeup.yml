@@ -31,6 +31,12 @@ jobs:
       - name: "Running SwitchMeUp"
         run: "/bin/bash switchmeup.sh ${GITHUB_WORKSPACE}/sdcard"
 
+      - name: Debug
+        run: |
+          ls -lah
+          ls -lah ${GITHUB_WORKSPACE}
+          ls -lah ${GITHUB_WORKSPACE}/sdcard
+
       - name: Compressing files
         run: "tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE}/sdcard"
 
