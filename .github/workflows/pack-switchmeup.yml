@@ -39,7 +39,7 @@ jobs:
           allowUpdates: true
           makeLatest: true
           token: ${{ secrets.TRIGGER_BUILD_TOKEN }}
-          tag: "SwitchMeUp $(date +'%d-%m-%y')"
+          tag: "$(date +'%d-%m-%y')"
         continue-on-error: true
 
       # In case it cannot publish the release at least it's providing the flatpak file for creating a manual release
