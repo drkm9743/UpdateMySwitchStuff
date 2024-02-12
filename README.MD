@@ -40,4 +40,8 @@ Can I propose a new software or feature?
 If you would like to contribute by adding something, but you're not sure if it would be merged, it can be discussed in the 'Discussions' here on GitHub.
 
 ## TODO
-I plan to create a pipeline that releases the updated files as a package, available for extraction onto your SD card, via GitHub releases.
+ - Create a pipeline that delivers the package based on a cron
+ - Enhance the pipeline to trigger when Atmosphere or hekate has been updated updated (+ patches)
+ - Enhance the pipeline to trigger when one of the components in `addons.yml` are updated
+ - Add a `--pipeline` argument to skip all the user prompts
+ - Add a `--force-clean` argument to delete (back up) sensible folders before moving the files, useful to fix some issues
