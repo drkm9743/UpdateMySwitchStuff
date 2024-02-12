@@ -24,21 +24,12 @@ jobs:
 
       - name: "Install dependencies"
         run: "sudo apt update && sudo apt install jq rsync curl wget tar"
-
-      # - name: "Updating release notes in appdata"
-      #   run: "automation_tools/appdata_management.sh"
-        
+       
       - name: "Running SwitchMeUp"
         run: "/bin/bash switchmeup.sh ${GITHUB_WORKSPACE}/sdcard"
 
-      - name: Debug
-        run: |
-          ls -lah
-          ls -lah ${GITHUB_WORKSPACE}
-          ls -lah ${GITHUB_WORKSPACE}/sdcard
-
       - name: Compressing files
-        run: "tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE}/sdcard"
+        run: "tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE}/sdcard ."
 
       - name: Publish SwitchMeUp pack in a new release
         uses: ncipollo/release-action@v1
