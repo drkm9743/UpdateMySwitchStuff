@@ -4,7 +4,7 @@
 
 # UpdateMySwitchStuff
 
-UpdateMySwitchStuff is a bash script designed to update Atmosphere, hekate, patches, and other software at the latest available versions. The basic package includes Atmosphere, hekate, and other components (mandatory for my usage), the in the `addons.yml` are defined the GitHub urls that are pulled and updated.
+UpdateMySwitchStuff is a bash script forked from SwitchMeUp designed to update Atmosphere, hekate, patches, and other software at the latest available versions. The basic package includes Atmosphere, hekate, and other components (mandatory for my usage), the in the `addons.yml` are defined the GitHub urls that are pulled and updated.
 
 > ⚠️ **WARNING:** I am not responsible for any issues that may arise from its usage.
 
