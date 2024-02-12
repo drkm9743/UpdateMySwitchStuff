@@ -42,4 +42,5 @@ echo -e "Moving files into the actual SD Card with backup\nSD Card: $sd_card\nBa
 mkdir -p $backup_folder
 mkdir -p $sd_card
 rsync -av --backup --backup-dir="$backup_folder" "$updated_sd/" "$sd_card/"
+rsync -av --backup --backup-dir="$backup_folder" "$updated_sd/payloads" "$sd_card/bootloader/payloads"
 echo "Everything done, enjoy!"
