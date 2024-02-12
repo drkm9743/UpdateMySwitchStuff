@@ -32,7 +32,7 @@ jobs:
         run: "tar -czvf SwitchMeUp.tar.gz -C ${GITHUB_WORKSPACE} sdcard"
 
       - name: "Generating date for tag"
-        run: echo "::set-env name=NOW::$(date +'%Y-%m-%dT%H:%M:%S')"
+        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
 
       - name: Publish SwitchMeUp pack in a new release
         uses: ncipollo/release-action@v1
