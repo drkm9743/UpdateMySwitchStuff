@@ -23,7 +23,7 @@ jobs:
           submodules: 'true'
 
       - name: "Install dependencies"
-        run: "/bin/bash apt install jq rsync curl wget realpath"
+        run: "apt update && apt install jq rsync curl wget realpath"
 
       # - name: "Updating release notes in appdata"
       #   run: "automation_tools/appdata_management.sh"
