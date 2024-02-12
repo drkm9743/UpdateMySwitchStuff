@@ -11,6 +11,9 @@ The basic package contains Atmosphere, hekate and wht for my usage is mandatory,
 
 > ⚠️ WARNING: this is a prersonal script that I'm sharing, I will not be responsible for any issue that can cause.
 
+### There are already some tools that do this even more prettier, why this?
+Because they usually use some AIO packages that I don't like, moreover thare was no one that can deliver my own selection, something was always missing. 
+
 ## Dependencies
 
 ### Ubuntu
@@ -31,3 +34,6 @@ Can you add `THAT SOFTWARE` ?
 
 Can I propose a new software or feature?
 > Yes, you can create a PR if you wish and we can talk about further implementations, but I won't do it for you.
+
+## TODO
+I will do a pipeline that will release, as a GitHub release, the updated files as a package to extract in your SD.
